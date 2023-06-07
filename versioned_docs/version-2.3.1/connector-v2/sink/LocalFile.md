@@ -20,7 +20,7 @@ If you use SeaTunnel Engine, It automatically integrated the hadoop jar when you
 
 By default, we use 2PC commit to ensure `exactly-once`
 
-- [x] file format
+- [x] file format type
   - [x] text
   - [x] csv
   - [x] parquet
@@ -35,9 +35,9 @@ By default, we use 2PC commit to ensure `exactly-once`
 | custom_filename                  | boolean | no       | false                                      | Whether you need custom the filename                      |
 | file_name_expression             | string  | no       | "${transactionId}"                         | Only used when custom_filename is true                    |
 | filename_time_format             | string  | no       | "yyyy.MM.dd"                               | Only used when custom_filename is true                    |
-| file_format                      | string  | no       | "csv"                                      |                                                           |
-| field_delimiter                  | string  | no       | '\001'                                     | Only used when file_format is text                        |
-| row_delimiter                    | string  | no       | "\n"                                       | Only used when file_format is text                        |
+| file_format_type                      | string  | no       | "csv"                                      |                                                           |
+| field_delimiter                  | string  | no       | '\001'                                     | Only used when file_format_type is text                        |
+| row_delimiter                    | string  | no       | "\n"                                       | Only used when file_format_type is text                        |
 | have_partition                   | boolean | no       | false                                      | Whether you need processing partitions.                   |
 | partition_by                     | array   | no       | -                                          | Only used then have_partition is true                     |
 | partition_dir_expression         | string  | no       | "${k0}=${v0}/${k1}=${v1}/.../${kn}=${vn}/" | Only used then have_partition is true                     |
@@ -80,13 +80,13 @@ When the format in the `file_name_expression` parameter is `xxxx-${now}` , `file
 | m      | Minute in hour     |
 | s      | Second in minute   |
 
-### file_format [string]
+### file_format_type [string]
 
 We supported as the following file types:
 
 `text` `json` `csv` `orc` `parquet`
 
-Please note that, The final file name will end with the file_format's suffix, the suffix of the text file is `txt`.
+Please note that, The final file name will end with the file_format_type's suffix, the suffix of the text file is `txt`.
 
 ### field_delimiter [string]
 
@@ -161,7 +161,7 @@ For orc file format simple config
 
 LocalFile {
     path = "/tmp/hive/warehouse/test2"
-    file_format = "orc"
+    file_format_type = "orc"
 }
 
 ```
@@ -172,7 +172,7 @@ For parquet file format with `sink_columns`
 
 LocalFile {
     path = "/tmp/hive/warehouse/test2"
-    file_format = "parquet"
+    file_format_type = "parquet"
     sink_columns = ["name","age"]
 }
 
@@ -184,7 +184,7 @@ For text file format with `have_partition` and `custom_filename` and `sink_colum
 
 LocalFile {
     path = "/tmp/hive/warehouse/test2"
-    file_format = "text"
+    file_format_type = "text"
     field_delimiter = "\t"
     row_delimiter = "\n"
     have_partition = true
